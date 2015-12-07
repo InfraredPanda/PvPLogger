@@ -15,7 +15,7 @@ public class ClientDisconnectListener
 	{
 		Player disconnectingPlayer = event.getTargetEntity();
 
-		if (PvPLogger.toggle && PvPLogger.playersTakenDamage.contains(disconnectingPlayer.getUniqueId()))
+		if (PvPLogger.playersTakenDamage.contains(disconnectingPlayer.getUniqueId()))
 		{
 			PvPLogger.playersToPunish.add(disconnectingPlayer.getUniqueId());
 

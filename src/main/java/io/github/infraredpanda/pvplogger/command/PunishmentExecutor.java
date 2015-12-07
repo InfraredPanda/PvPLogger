@@ -5,23 +5,17 @@ import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
-import org.spongepowered.api.text.Texts;
-import org.spongepowered.api.text.format.TextColors;
 
-import io.github.infraredpanda.pvplogger.PvPLogger;
+import io.github.infraredpanda.pvplogger.utils.ConfigManager;
 
-public class ToggleExecutor implements CommandExecutor
+public class PunishmentExecutor implements CommandExecutor
 {
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
-		boolean toggle = ctx.<Boolean> getOne("toggle").get();
-		PvPLogger.toggle = toggle;
+		String punishment = ctx.<String> getOne("punishment").get();
 		
-		if (toggle)
-			src.sendMessage(Texts.of(TextColors.GREEN, "PvP Logger is now on!"));
-		else
-			src.sendMessage(Texts.of(TextColors.RED, "PvP Logger is now off!"));
-
+		ConfigManager.setConfigValue(new Object[]{"pvplogger", "punishment"}, punishment);
+		
 		return CommandResult.success();
 	}
 }

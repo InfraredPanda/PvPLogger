@@ -20,7 +20,7 @@ import org.spongepowered.api.text.Texts;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
-import io.github.infraredpanda.pvplogger.command.ToggleExecutor;
+import io.github.infraredpanda.pvplogger.command.PunishmentExecutor;
 import io.github.infraredpanda.pvplogger.listener.ClientDisconnectListener;
 import io.github.infraredpanda.pvplogger.listener.ClientJoinListener;
 import io.github.infraredpanda.pvplogger.listener.PlayerDamageListener;
@@ -32,7 +32,6 @@ import ninja.leaping.configurate.loader.ConfigurationLoader;
 public class PvPLogger
 {
 	public static Game game;
-	public static boolean toggle;
 	public static Set<UUID> playersTakenDamage = Sets.newHashSet();
 	public static Set<UUID> playersToPunish = Sets.newHashSet();
 	public static ConfigurationNode config;
@@ -58,7 +57,6 @@ public class PvPLogger
 	public void onServerPreInit(GamePreInitializationEvent event)
 	{
 		getLogger().info("PvPLogger loading...");
-		getLogger().info("Make sure to toggle PvPLogger on!");
 	}
 
 	@Listener
@@ -73,7 +71,7 @@ public class PvPLogger
 			{
 				dConfig.createNewFile();
 				config = confManager.load();
-				config.getNode("pvplogger", "punishment").setValue("minecraft:kill @p");
+				config.getNode("pvplogger", "punishment").setValue("kill @p");
 				confManager.save(config);
 			}
 
@@ -85,9 +83,14 @@ public class PvPLogger
 			getLogger().error("The default configuration could not be loaded or created!");
 		}
 
-		CommandSpec pvpLoggerCommandSpec = CommandSpec.builder().description(Texts.of("PvPLogger Toggle")).permission("pvplogger.use").arguments(GenericArguments.onlyOne(GenericArguments.bool(Texts.of("toggle")))).executor(new ToggleExecutor()).build();
+		CommandSpec punishmentCommandSpec = CommandSpec.builder()
+			.description(Texts.of("PvPLogger Set Punishment Command"))
+			.permission("pvplogger.punishment.set")
+			.arguments(GenericArguments.onlyOne(
+				GenericArguments.bool(Texts.of("punishment"))))
+			.executor(new PunishmentExecutor()).build();
 
-		game.getCommandManager().register(this, pvpLoggerCommandSpec, "pvpl", "pvplogger");
+		game.getCommandManager().register(this, punishmentCommandSpec, "setpunishment");
 
 		game.getEventManager().registerListeners(this, new ClientDisconnectListener());
 		game.getEventManager().registerListeners(this, new PlayerDamageListener());
