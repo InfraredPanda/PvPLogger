@@ -71,7 +71,7 @@ public class PvPLogger
 			{
 				dConfig.createNewFile();
 				config = confManager.load();
-				config.getNode("pvplogger", "punishment").setValue("kill @p");
+				config.getNode("pvplogger", "punishment").setValue("minecraft:clear @p");
 				confManager.save(config);
 			}
 
