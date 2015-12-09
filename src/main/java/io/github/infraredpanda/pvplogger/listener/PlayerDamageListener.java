@@ -36,7 +36,7 @@ public class PlayerDamageListener
 					if (entityDamageSrc.getSource() instanceof Player)
 					{
 						// Optional telling the source to not logout
-						//Player source = (Player) entityDamageSrc.getSource();
+						// Player source = (Player) entityDamageSrc.getSource();
 
 						// Victim Cannot Logout, or will be punished
 
@@ -54,10 +54,11 @@ public class PlayerDamageListener
 						}
 						else
 						{
-							//Notify victim if not already done..
+							// Notify victim if not already done..
 							victim.sendMessage(Texts.of(TextColors.DARK_RED, "[PvPLogger]: ", TextColors.RED, "You are engaged in combat! Do not logout for ten seconds or you will be punished!"));
 							PvPLogger.playersTakenDamage.add(victim.getUniqueId());
 						}
+						
 						
 						taskBuilder.execute(() -> {
 							victim.sendMessage(Texts.of(TextColors.DARK_RED, "[PvPLogger]: ", TextColors.GREEN, "You are no longer in combat, you may disconnect safely."));
