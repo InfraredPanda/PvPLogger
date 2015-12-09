@@ -35,32 +35,34 @@ public class PlayerDamageListener
 
 					if (entityDamageSrc.getSource() instanceof Player)
 					{
-						Player source = (Player) entityDamageSrc.getSource();
-						
-						//Tell the Victim Not to Logout
-						victim.sendMessage(Texts.of(TextColors.DARK_RED, "[PvPLogger]: ", TextColors.RED, "You are engaged in combat! Do not logout for ten seconds or you will be punished!"));
+						// Optional telling the source to not logout
+						//Player source = (Player) entityDamageSrc.getSource();
+
+						// Victim Cannot Logout, or will be punished
 
 						Scheduler scheduler = PvPLogger.game.getScheduler();
 						Task.Builder taskBuilder = scheduler.createTaskBuilder();
 
 						if (PvPLogger.playersTakenDamage.contains(victim.getUniqueId()))
 						{
-							Set<Task> taskToRemove = scheduler.getTasksByName("PvPLogger - Remove Victim " + victim.getUniqueId().toString());
+							Set<Task> currentTasks = scheduler.getTasksByName("PvPLogger - Remove Victim " + victim.getUniqueId().toString());
 
-							for (Task task : taskToRemove)
+							for (Task task : currentTasks)
 							{
 								scheduler.getScheduledTasks().remove(task);
 							}
 						}
 						else
 						{
+							//Notify victim if not already done..
+							victim.sendMessage(Texts.of(TextColors.DARK_RED, "[PvPLogger]: ", TextColors.RED, "You are engaged in combat! Do not logout for ten seconds or you will be punished!"));
 							PvPLogger.playersTakenDamage.add(victim.getUniqueId());
 						}
-
+						
 						taskBuilder.execute(() -> {
 							victim.sendMessage(Texts.of(TextColors.DARK_RED, "[PvPLogger]: ", TextColors.GREEN, "You are no longer in combat, you may disconnect safely."));
 							PvPLogger.playersTakenDamage.remove(victim.getUniqueId());
-						}).delay(10, TimeUnit.SECONDS).name("PvPLogger - Remove Victim " + victim.getUniqueId().toString()).submit(PvPLogger.game.getPluginManager().getPlugin("PvPLogger").get().getInstance());
+						}).delay(10, TimeUnit.SECONDS).name("PvPLogger - Remove Victim " + victim.getUniqueId().toString()).submit(PvPLogger.game.getPluginManager().getPlugin("PvPLogger").get().getInstance().get());
 					}
 				}
 			}
