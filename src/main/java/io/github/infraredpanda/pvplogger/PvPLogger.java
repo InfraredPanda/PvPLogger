@@ -83,12 +83,7 @@ public class PvPLogger
 			getLogger().error("The default configuration could not be loaded or created!");
 		}
 
-		CommandSpec punishmentCommandSpec = CommandSpec.builder()
-			.description(Texts.of("PvPLogger Set Punishment Command"))
-			.permission("pvplogger.punishment.set")
-			.arguments(GenericArguments.onlyOne(
-				GenericArguments.bool(Texts.of("punishment"))))
-			.executor(new PunishmentExecutor()).build();
+		CommandSpec punishmentCommandSpec = CommandSpec.builder().description(Texts.of("PvPLogger Set Punishment Command")).permission("pvplogger.punishment.set").arguments(GenericArguments.onlyOne(GenericArguments.remainingJoinedStrings(Texts.of("punishment")))).executor(new PunishmentExecutor()).build();
 
 		game.getCommandManager().register(this, punishmentCommandSpec, "setpunishment");
 

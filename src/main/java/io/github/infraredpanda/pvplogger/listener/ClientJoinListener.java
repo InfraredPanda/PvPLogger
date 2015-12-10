@@ -20,14 +20,18 @@ public class ClientJoinListener
 
 		if (PvPLogger.playersToPunish.contains(joinedPlayer.getUniqueId()))
 		{
+			if(PvPLogger.playersTakenDamage.contains(joinedPlayer.getUniqueId()))
+			{
+				PvPLogger.playersTakenDamage.remove(joinedPlayer.getUniqueId());
+			}
 			PvPLogger.playersToPunish.remove(joinedPlayer.getUniqueId());
-			
+
 			Optional<Object> optionalPunishmentCommand = ConfigManager.getConfigValue("pvplogger.punishment");
 
 			if (optionalPunishmentCommand.isPresent())
 			{
 				String punishCommand = (String) optionalPunishmentCommand.get();
-				punishCommand.replaceAll("@p", joinedPlayer.getName());
+				punishCommand = punishCommand.replaceAll("@p", joinedPlayer.getName());
 				PvPLogger.game.getCommandManager().process(PvPLogger.game.getServer().getConsole(), punishCommand);
 				joinedPlayer.sendMessage(Texts.of(TextColors.DARK_RED, "[PvPLogger]: ", TextColors.RED, "You have been punished for disconnecting during combat!"));
 			}

@@ -23,7 +23,7 @@ public class ConfigManager
 			return Optional.empty();
 		}
 	}
-	
+
 	public static void setConfigValue(Object[] path, Object value)
 	{
 		ConfigurationLoader<CommentedConfigurationNode> configManager = PvPLogger.getConfigManager();

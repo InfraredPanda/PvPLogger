@@ -49,7 +49,7 @@ public class PlayerDamageListener
 
 							for (Task task : currentTasks)
 							{
-								scheduler.getScheduledTasks().remove(task);
+								task.cancel();
 							}
 						}
 						else
@@ -58,11 +58,10 @@ public class PlayerDamageListener
 							victim.sendMessage(Texts.of(TextColors.DARK_RED, "[PvPLogger]: ", TextColors.RED, "You are engaged in combat! Do not logout for ten seconds or you will be punished!"));
 							PvPLogger.playersTakenDamage.add(victim.getUniqueId());
 						}
-						
-						
+
 						taskBuilder.execute(() -> {
-							victim.sendMessage(Texts.of(TextColors.DARK_RED, "[PvPLogger]: ", TextColors.GREEN, "You are no longer in combat, you may disconnect safely."));
 							PvPLogger.playersTakenDamage.remove(victim.getUniqueId());
+							victim.sendMessage(Texts.of(TextColors.DARK_RED, "[PvPLogger]: ", TextColors.GREEN, "You are no longer in combat, you may disconnect safely."));
 						}).delay(10, TimeUnit.SECONDS).name("PvPLogger - Remove Victim " + victim.getUniqueId().toString()).submit(PvPLogger.game.getPluginManager().getPlugin("PvPLogger").get().getInstance().get());
 					}
 				}
