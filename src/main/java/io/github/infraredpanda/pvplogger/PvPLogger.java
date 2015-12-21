@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.config.DefaultConfig;
@@ -62,7 +63,7 @@ public class PvPLogger
 	@Listener
 	public void onServerInit(GameInitializationEvent event)
 	{
-		game = event.getGame();
+		game = Sponge.getGame();
 
 		// Config File Loading
 		try
