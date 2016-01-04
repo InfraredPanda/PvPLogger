@@ -6,7 +6,7 @@ import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.entity.living.player.Player;
-import org.spongepowered.api.text.Texts;
+import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 import io.github.infraredpanda.pvplogger.utils.ConfigManager;
@@ -20,7 +20,7 @@ public class PunishmentExecutor implements CommandExecutor
 
 		ConfigManager.setConfigValue(new Object[] { "pvplogger", "punishment" }, punishment);
 
-		player.sendMessage(Texts.of(TextColors.RED, "[PvPLogger]: ", TextColors.GREEN, "Punishment set to: ", TextColors.GOLD, punishment));
+		player.sendMessage(Text.of(TextColors.RED, "[PvPLogger]: ", TextColors.GREEN, "Punishment set to: ", TextColors.GOLD, punishment));
 
 		return CommandResult.success();
 	}

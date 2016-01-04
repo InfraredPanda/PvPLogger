@@ -16,7 +16,7 @@ import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePostInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
-import org.spongepowered.api.text.Texts;
+import org.spongepowered.api.text.Text;
 
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
@@ -84,7 +84,7 @@ public class PvPLogger
 			getLogger().error("The default configuration could not be loaded or created!");
 		}
 
-		CommandSpec punishmentCommandSpec = CommandSpec.builder().description(Texts.of("PvPLogger Set Punishment Command")).permission("pvplogger.punishment.set").arguments(GenericArguments.onlyOne(GenericArguments.remainingJoinedStrings(Texts.of("punishment")))).executor(new PunishmentExecutor()).build();
+		CommandSpec punishmentCommandSpec = CommandSpec.builder().description(Text.of("PvPLogger Set Punishment Command")).permission("pvplogger.punishment.set").arguments(GenericArguments.onlyOne(GenericArguments.remainingJoinedStrings(Text.of("punishment")))).executor(new PunishmentExecutor()).build();
 
 		game.getCommandManager().register(this, punishmentCommandSpec, "setpunishment");
 

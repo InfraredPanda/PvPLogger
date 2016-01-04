@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
-import org.spongepowered.api.text.Texts;
+import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 import io.github.infraredpanda.pvplogger.PvPLogger;
@@ -33,12 +33,12 @@ public class ClientJoinListener
 				String punishCommand = (String) optionalPunishmentCommand.get();
 				punishCommand = punishCommand.replaceAll("@p", joinedPlayer.getName());
 				PvPLogger.game.getCommandManager().process(PvPLogger.game.getServer().getConsole(), punishCommand);
-				joinedPlayer.sendMessage(Texts.of(TextColors.DARK_RED, "[PvPLogger]: ", TextColors.RED, "You have been punished for disconnecting during combat!"));
+				joinedPlayer.sendMessage(Text.of(TextColors.DARK_RED, "[PvPLogger]: ", TextColors.RED, "You have been punished for disconnecting during combat!"));
 			}
 
 			for (Player player : PvPLogger.game.getServer().getOnlinePlayers())
 			{
-				player.sendMessage(Texts.of(TextColors.DARK_RED, "[PvPLogger]: ", TextColors.RED, joinedPlayer.getName() + " disconnected during combat and has been punished!"));
+				player.sendMessage(Text.of(TextColors.DARK_RED, "[PvPLogger]: ", TextColors.RED, joinedPlayer.getName() + " disconnected during combat and has been punished!"));
 			}
 		}
 	}
