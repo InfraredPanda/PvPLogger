@@ -21,6 +21,7 @@ import org.spongepowered.api.text.Text;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
+import io.github.infraredpanda.pvplogger.command.DropItemToggleExecutor;
 import io.github.infraredpanda.pvplogger.command.PunishmentExecutor;
 import io.github.infraredpanda.pvplogger.listener.ClientDisconnectListener;
 import io.github.infraredpanda.pvplogger.listener.ClientJoinListener;
@@ -29,7 +30,7 @@ import ninja.leaping.configurate.ConfigurationNode;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 
-@Plugin(id = "PvPLogger", name = "PvPLogger", version = "0.1")
+@Plugin(id = "PvPLogger", name = "PvPLogger", version = "1.1")
 public class PvPLogger
 {
 	public static Game game;
@@ -84,9 +85,25 @@ public class PvPLogger
 			getLogger().error("The default configuration could not be loaded or created!");
 		}
 
-		CommandSpec punishmentCommandSpec = CommandSpec.builder().description(Text.of("PvPLogger Set Punishment Command")).permission("pvplogger.punishment.set").arguments(GenericArguments.onlyOne(GenericArguments.remainingJoinedStrings(Text.of("punishment")))).executor(new PunishmentExecutor()).build();
+		CommandSpec punishmentCommandSpec = CommandSpec.builder()
+			.description(Text.of("PvPLogger Set Punishment Command"))
+			.permission("pvplogger.punishment.set")
+			.arguments(GenericArguments.onlyOne(
+				GenericArguments.remainingJoinedStrings(Text.of("punishment"))))
+			.executor(new PunishmentExecutor())
+			.build();
 
 		game.getCommandManager().register(this, punishmentCommandSpec, "setpunishment");
+		
+		CommandSpec toggleCommandSpec = CommandSpec.builder()
+			.description(Text.of("PvPLogger Drop Item Toggle"))
+			.permission("pvplogger.punishment.toggle")
+			.arguments(GenericArguments.onlyOne(
+				GenericArguments.bool(Text.of("toggle"))))
+			.executor(new DropItemToggleExecutor())
+			.build();
+
+		game.getCommandManager().register(this, toggleCommandSpec, "dropitemtoggle");
 
 		game.getEventManager().registerListeners(this, new ClientDisconnectListener());
 		game.getEventManager().registerListeners(this, new PlayerDamageListener());
