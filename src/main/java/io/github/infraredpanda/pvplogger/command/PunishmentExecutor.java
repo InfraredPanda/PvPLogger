@@ -1,7 +1,5 @@
 package io.github.infraredpanda.pvplogger.command;
 
-
-
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
